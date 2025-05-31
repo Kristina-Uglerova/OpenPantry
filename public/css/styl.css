@@ -1,0 +1,256 @@
+.header {
+    display: flex;
+    justify-content: center;
+    margin-top: 175px;
+    margin-left: 250px;
+    margin-right: 250px;
+    gap: 50px;
+}
+
+.navbar {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    border-radius: 50px;
+    width: auto;
+    background-color: #fdf3b2;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.navbar a {
+    margin: 0 10px;
+    text-decoration: none;
+    padding: 10px;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.picture {
+    height: 400px;
+    width: auto;
+    border-radius: 25px;
+}
+
+.title {
+    font-family: Rockwell, serif;
+    font-weight: bold;
+    font-size: 70px;
+    margin: 0;
+}
+
+.subtitle {
+    font-family: Rockwell, serif;
+    font-weight: bold;
+    font-size: 35px;
+    margin: 0;
+}
+
+.text {
+    font-family: 'Montserrat', serif;
+    font-size: 20px;
+}
+
+.pill_button {
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+    font-size: 24px;
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px 20px;
+    border-style: none;
+    cursor: pointer;
+}
+
+.small_pill_button {
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    padding: 5px 10px;
+    border-style: none;
+    cursor: pointer;
+}
+
+.pill_button:hover {
+    font-weight: bolder;
+}
+
+.home_buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    width: auto;
+    height: auto;
+    overflow: auto;
+    background-color: #fdf3b2;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1999;
+}
+
+.form-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    gap: 15px;
+}
+
+.button-container {
+    text-align: right;
+    margin-top: 5px;
+}
+
+.close {
+    font-size: 28px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.recipe-detail {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 30px;
+    background-color: #fdf3b2;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.recipe-header img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 25px;
+}
+
+.recipe-body {
+    padding-left: 25px;
+    font-family: Montserrat, sans-serif;
+    font-size: 22px;
+}
+.ingredients-page {
+    min-width: 700px;
+    width: max-content;
+    margin: 80px auto;
+    padding: 30px;
+    background-color: #fdf3b2;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.ingredients-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.ingredients-table th,
+.ingredients-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #ccc;
+}
+
+.ingredients-table th {
+    background-color: #e6d97b;
+    font-weight: bold;
+}
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-right: 10px;
+}
+
+.icon-button i:hover {
+    color: #6e932e;
+}
+
+.all-recipes-page {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.recipe-card {
+    display: block;
+    background-color: #fdf3b2;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    color: inherit;
+}
+
+.recipe-card img {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+body {
+    background-color: #6e932e;
+}
+
+input {
+    border-style: none;
+    height: 30px;
+    font-size: 24px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
