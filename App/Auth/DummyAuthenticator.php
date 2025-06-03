@@ -3,6 +3,7 @@
 namespace App\Auth;
 
 use App\Core\IAuthenticator;
+use App\Models\User;
 
 /**
  * Class DummyAuthenticator
@@ -11,10 +12,9 @@ use App\Core\IAuthenticator;
  */
 class DummyAuthenticator implements IAuthenticator
 {
-    public const LOGIN = "admin";
-    public const PASSWORD_HASH = '$2y$10$GRA8D27bvZZw8b85CAwRee9NH5nj4CQA6PDFMc90pN9Wi4VAWq3yq'; // admin
-    public const USERNAME = "Admin";
-
+    private string $login;
+    private string $hashedPassword;
+    private string $isLogged;
     /**
      * DummyAuthenticator constructor
      */
@@ -32,12 +32,15 @@ class DummyAuthenticator implements IAuthenticator
      */
     public function login($login, $password): bool
     {
-        if ($login == self::LOGIN && password_verify($password, self::PASSWORD_HASH)) {
-            $_SESSION['user'] = self::USERNAME;
-            return true;
-        } else {
-            return false;
+        $user = User::getUserByEmail($login);
+        if($user != null) {
+            $isPasswordValid = password_verify($password, $user->getPasswordHashed());
+            if($isPasswordValid) {
+                $_SESSION['user'] = $login;
+                return true;
+            }
         }
+        return false;
     }
 
     /**

@@ -12,7 +12,7 @@ class RecipeController extends AControllerBase
         return $this->html();
     }
 
-    public function all_recipes(): Response
+    public function recipes(): Response
     {
         return $this->html();
     }
@@ -20,5 +20,12 @@ class RecipeController extends AControllerBase
     public function index(): Response
     {
         return $this->html();
+    }
+
+    public function recipe_form(): Response
+    {
+        return $this->html([
+            'recipe' => null
+        ]);
     }
 }
