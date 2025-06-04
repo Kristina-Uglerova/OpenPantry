@@ -7,3 +7,8 @@ function closeModal(id) {
     document.getElementById(id).style.display = "none";
     document.getElementById("modalOverlay").style.display = "none";
 }
+
+function showMessage(text) {
+    document.getElementById('message').textContent = text;
+    openModal('messageModal');
+}

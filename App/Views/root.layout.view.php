@@ -27,7 +27,7 @@ use App\Core\LinkGenerator;
 <?php
 include __DIR__ . '/partials/login_modal.view.php';
 include __DIR__ . '/partials/create_acc_modal.view.php';
-include __DIR__ . '/partials/ingredient_update_modal.view.php';
+include __DIR__ . '/partials/ingredient_form.view.php';
 ?>
 </body>
 </html>
