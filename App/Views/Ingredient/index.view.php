@@ -21,15 +21,18 @@
                 <td><?= htmlspecialchars($ingredient->getUnit()) ?></td>
                 <td>
                     <button class="icon-button"
-                            onclick="openModal('ingredientForm', this)"
                             data-id="<?= $ingredient->getId() ?>"
                             data-name="<?= htmlspecialchars($ingredient->getName()) ?>"
-                            data-unit="<?= htmlspecialchars($ingredient->getUnit()) ?>">
+                            data-unit="<?= htmlspecialchars($ingredient->getUnit()) ?>"
+                            onclick="openIngredientModal('ingredientForm', this)">
                         <span class="bi bi-pencil-square"></span>
                     </button>
-                    <button class="icon-button" onclick="<?= $link->url("ingredient.delete") ?>">
-                        <span class="bi bi-trash"></span>
-                    </button>
+                    <form method="post" action="<?= $link->url("ingredient.delete") ?>">
+                        <input type="hidden" name="id" value="<?= $ingredient->getId() ?>">
+                        <button type="submit" class="icon-button">
+                            <span class="bi bi-trash"></span>
+                        </button>
+                    </form>
                 </td>
             </tr>
         <?php endforeach; ?>

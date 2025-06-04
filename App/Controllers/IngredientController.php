@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 use App\Models\Ingredient;
+use App\Models\RecipesIngredientsRelation;
+
 class IngredientController extends AControllerBase
 {
     public function ingredients(): Response
@@ -34,9 +36,23 @@ class IngredientController extends AControllerBase
 
     public function delete(): Response {
         $id = $this->request()->getValue('id');
-        if(!Ingredient::deleteIfUnused((int)$id)) {
-
+        $used = RecipesIngredientsRelation::containsIngredient($id);
+        if ($used) {
+            return false;
         }
+        $ingredient = Ingredient::getOne($id);
+        $ingredient->delete();
+        return $this->redirect($this->url('Ingredient.index'));
+    }
+
+    public function update(): Response {
+        $id = $this->request()->getValue('id');
+        $name = $this->request()->getValue('name');
+        $unit  = $this->request()->getValue('unit');
+        $ingredient = Ingredient::getOne($id);
+        $ingredient->setName($name);
+        $ingredient->setUnit($unit);
+        $ingredient->save();
         return $this->redirect($this->url('Ingredient.index'));
     }
 }
