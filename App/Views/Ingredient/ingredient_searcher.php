@@ -1,0 +1,29 @@
+<div id="ingredientSearcher" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('ingredientSearcher')">&times;</span>
+        <h2 class="title">Add ingredients</h2>
+        <input type="text" id="ingredientSearchBar" placeholder="Search ingredients...">
+        <ul id="searchResults"></ul>
+        <div class>
+            <h3 class="subtitle">New ingredient</h3>
+            <form class="form-body">
+                <input type="text" id="newIngredientName" placeholder="Name">
+                <input type="text" id="newIngredientUnit" placeholder="Unit">
+                <button class="small_pill_button" onclick="addNewIngredient()">Add</button>
+            </form>
+        </div>
+
+        <div>
+            <h3 class="subtitle">Selected ingredients</h3>
+            <ul id="selectedIngredients"></ul>
+        </div>
+
+        <div class="button-container">
+            <button class="small_pill_button" onclick="submitIngredients()">Submit</button>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+
+</script>

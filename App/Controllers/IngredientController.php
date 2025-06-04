@@ -48,7 +48,7 @@ class IngredientController extends AControllerBase
     public function update(): Response {
         $id = $this->request()->getValue('id');
         $name = $this->request()->getValue('name');
-        $unit  = $this->request()->getValue('unit');
+        $unit = $this->request()->getValue('unit');
         $ingredient = Ingredient::getOne($id);
         $ingredient->setName($name);
         $ingredient->setUnit($unit);

@@ -11,6 +11,9 @@
                value="<?= isset($recipe) && $recipe !== null ? htmlspecialchars($recipe->getTitle()) : '' ?>"
         >
 
+        <label class="text" for="ingredients">Ingredients</label>
+        <button class="pill_button" id="openIngredientsBtn" onclick="openModal('ingredientSearcher')">Modify ingredients</button>
+
         <label class="text" for="description">Description</label>
         <textarea id="description" name="description" rows="5" required
         ><?= isset($recipe) && $recipe !== null ? htmlspecialchars($recipe->getDescription()) : '' ?></textarea>
