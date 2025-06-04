@@ -14,6 +14,7 @@
     right: 20px;
     border-radius: 50px;
     width: auto;
+    height: 50px;
     background-color: #fdf3b2;
     display: flex;
     justify-content: space-around;
@@ -89,6 +90,11 @@
     cursor: pointer;
 }
 
+.small_pill_button .logout {
+    horiz-align: right;
+    padding-right: 5px;
+}
+
 .pill_button:hover {
     font-weight: bolder;
 }
@@ -126,9 +132,15 @@
     z-index: 1999;
 }
 
-.form-body {
+.form-body-vertical {
     display: flex;
     flex-direction: column;
+}
+
+.form-body-horizontal {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
 .modal-content {
@@ -270,8 +282,20 @@ body {
 input {
     border-style: none;
     height: 30px;
-    font-size: 24px;
+    font-size: 16px;
     margin-top: 10px;
     margin-bottom: 10px;
     outline: none;
+}
+
+#amountInput {
+    width: 75px;
+}
+#searchResults li {
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#ingredientSearcher.modal {
+    width: 75%;
 }

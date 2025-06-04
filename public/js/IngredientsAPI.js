@@ -2,14 +2,14 @@ import {DataService} from "./DataService.js";
 class IngredientsAPI extends DataService {
 
     constructor() {
-        super("ingredientsAPI");
+        super("ingredientsApi");
     }
 
     async getIngredients(string = '') {
         return await this.sendRequest(
             "getIngredients" + string,
             "POST",
-            100,
+            200,
             null,
             []);
     }

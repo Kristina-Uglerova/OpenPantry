@@ -82,6 +82,20 @@ class DummyAuthenticator implements IAuthenticator
         return isset($_SESSION['user']) && $_SESSION['user'] != null;
     }
 
+    public function isUserAdmin(): bool {
+        if (!$this->isLogged()) {
+            return false;
+        }
+
+        $user = User::getUserByEmail($_SESSION['user']);
+        if (!$user) {
+            return false;
+        }
+
+        return $user->isAdmin();
+    }
+
+
     /**
      * Return the id of the logged-in user
      * @return mixed

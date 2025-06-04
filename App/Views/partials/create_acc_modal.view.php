@@ -5,7 +5,7 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('createAccountModal')">&times;</span>
         <h2 class="title">Create account</h2>
-        <form class="form-body" method="post" action="<?= $link->url("auth.register") ?>">
+        <form class="form-body-vertical" method="post" action="<?= $link->url("auth.register") ?>">
             <label class="text" for="email">Email</label>
             <input type="email" id="email" name="email" required>
 

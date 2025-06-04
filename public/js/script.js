@@ -1,14 +1,12 @@
 import {IngredientsAPI} from "./IngredientsAPI.js";
-
-document.getElementById("openIngredientsBtn").onclick += () => {
-    openModal("ingredientSearcher")
-}
-
-document.openModal = function (id) {
+window.openModal = openModal;
+function openModal(id) {
+    console.log("Opening modal with ID:", id);
     document.getElementById(id).style.display = "block";
     document.getElementById("modalOverlay").style.display = "block";
 }
 
+window.closeModal = closeModal;
 function closeModal(id) {
     document.getElementById(id).style.display = "none";
     document.getElementById("modalOverlay").style.display = "none";
@@ -19,6 +17,7 @@ function openMessageModal(id, message) {
     openModal(id);
 }
 
+window.openIngredientModal = openIngredientModal
 function openIngredientModal(modalId, button) {
     document.getElementById(modalId).style.display = "block";
     document.getElementById("modalOverlay").style.display = "block";
@@ -51,14 +50,17 @@ document.getElementById("ingredientSearchBar").onchange += async () => {
     await triggerIngredientSearch()
 }
 
-document.triggerIngredientSearch = async function () {
+document.getElementById("ingredientSearchBar").oninput = async () => {
+    triggerIngredientSearch()
+}
+window.triggerIngredientSearch = async function () {
+    console.log("Triggering ingredient search...");
     var ingredientsAPI = new IngredientsAPI()
 
-    console.log("I am here")
     const query = document.getElementById('ingredientSearchBar').value.trim();
     try {
-        const result = await ingredientsAPI.getIngredients(query ? `?query=${encodeURIComponent(query)}` : '');
-        console.log(result.size);
+        const result = await ingredientsAPI.getIngredients('&name=' + query);
+        console.log(result);
         renderSearchResults(result);
     } catch (error) {
         console.error("Error fetching ingredients:", error);
@@ -77,12 +79,10 @@ function renderSearchResults(results) {
         const li = document.createElement('li');
         li.textContent = `${ingredient.name} (${ingredient.unit})`;
 
-        const addButton = document.createElement('button');
-        addButton.textContent = 'Add';
-        addButton.classList.add('small_pill_button');
-        addButton.onclick = () => addIngredientToSelectedList(ingredient);
+        li.addEventListener('dblclick', () => {
+            addIngredientToSelectedList(ingredient);
+        });
 
-        li.appendChild(addButton);
         resultList.appendChild(li);
     });
 }
@@ -93,7 +93,7 @@ function addIngredientToSelectedList(ingredient) {
     const li = document.createElement('li');
     li.innerHTML = `
             ${ingredient.name} (${ingredient.unit})
-            <input type="number" placeholder="Amount" style="margin-left: 10px;">
+            <input type="number" placeholder="Amount" id="amountInput"">
         `;
 
     selectedList.appendChild(li);
@@ -102,5 +102,3 @@ function addIngredientToSelectedList(ingredient) {
 function addNewIngredient() {
     //ingredient = document.getElementById('newIngredientName').value;
 }
-
-export {openModal};

@@ -28,6 +28,10 @@ class User extends Model
     {
         $this->is_admin = $isAdmin;
     }
+
+    public function isAdmin(): bool {
+        return $this->is_admin;
+    }
     public static function getUserByEmail(string $email): ?User {
         $usersWithEmail = self::getAll("email = :email", ["email" => $email]);
         if (count($usersWithEmail) > 0) {

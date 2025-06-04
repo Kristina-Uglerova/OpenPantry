@@ -8,7 +8,7 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('loginModal')">&times;</span>
         <h2 class="title">Sign in</h2>
-        <form class="form-body" method="post" action="<?= $link->url("auth.login") ?>">
+        <form class="form-body-vertical" method="post" action="<?= $link->url("auth.login") ?>">
             <label class="text" for="email">Email</label>
             <input type="email" id="email" name="login" required>
 

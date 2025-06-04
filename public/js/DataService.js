@@ -50,6 +50,7 @@ class DataService {
                         "Accept" : "application/json", // Accept only JSON as response
                     }
                 });
+            console.log(response)
             // If return code do not match our expected value throw error
             if (response.status !== responseCode ) return onErrorReturn;
 

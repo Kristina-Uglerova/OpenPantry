@@ -2,13 +2,13 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('ingredientSearcher')">&times;</span>
         <h2 class="title">Add ingredients</h2>
-        <input type="text" id="ingredientSearchBar" placeholder="Search ingredients...">
+        <input type="text" id="ingredientSearchBar" placeholder="Search ingredients..." class="search-input">
         <ul id="searchResults"></ul>
         <div class>
             <h3 class="subtitle">New ingredient</h3>
-            <form class="form-body">
-                <input type="text" id="newIngredientName" placeholder="Name">
-                <input type="text" id="newIngredientUnit" placeholder="Unit">
+            <form class="form-body-horizontal">
+                <input type="text" id="newIngredientName" placeholder="Name" class="search-input">
+                <input type="text" id="newIngredientUnit" placeholder="Unit" class="search-input">
                 <button class="small_pill_button" onclick="addNewIngredient()">Add</button>
             </form>
         </div>

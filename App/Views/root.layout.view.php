@@ -12,7 +12,7 @@ use App\Core\LinkGenerator;
     <meta charset="UTF-8">
     <title><?= \App\Config\Configuration::APP_NAME ?></title>
     <link rel="stylesheet" href="/public/css/styl.css">
-    <script type="module" src="/public/js/script.js"></script>
+    <script src="/public/js/script.js" type="module"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body>

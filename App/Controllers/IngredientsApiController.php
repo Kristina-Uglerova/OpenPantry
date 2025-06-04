@@ -6,7 +6,7 @@ use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 use App\Models\Ingredient;
 
-class IngredientApiController extends AControllerBase
+class IngredientsApiController extends AControllerBase
 {
 
     public function index(): Response
@@ -14,9 +14,10 @@ class IngredientApiController extends AControllerBase
         throw new HTTPException(501, "Not Implemented");
     }
 
-    public function getIngredients($name): Response
+    public function getIngredients($name = null): Response
     {
-        $ingredients = Ingredient::getAll("name like %$name%)");
+        $name = $this->request()->getValue("name");
+        $ingredients = Ingredient::getAll("name LIKE '%" . $name . "%'");
         return $this->json($ingredients);
     }
 }

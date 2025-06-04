@@ -7,7 +7,7 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('ingredientForm')">&times;</span>
         <h2 class="title">Update ingredient</h2>
-        <form class="form-body" method="post" action="<?= $link->url("ingredient.update") ?>">
+        <form class="form-body-vertical" method="post" action="<?= $link->url("ingredient.update") ?>">
             <label class="text" for="name">Name</label>
             <input type="text" name="name">
 
