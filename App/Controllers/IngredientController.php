@@ -6,6 +6,7 @@ use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 use App\Models\Ingredient;
 use App\Models\RecipesIngredientsRelation;
+use App\Core\Responses\RedirectResponse;
 
 class IngredientController extends AControllerBase
 {
@@ -54,5 +55,15 @@ class IngredientController extends AControllerBase
         $ingredient->setUnit($unit);
         $ingredient->save();
         return $this->redirect($this->url('Ingredient.index'));
+    }
+
+    public function save()
+    {
+        $id = (int)$this->request()->getValue('id');
+        $ingredient = new Ingredient();
+        $ingredient->setName($this->request()->getValue('name'));
+        $ingredient->setUnit($this->request()->getValue('unit'));
+        $ingredient->save();
+
     }
 }

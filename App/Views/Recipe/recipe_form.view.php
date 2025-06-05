@@ -14,7 +14,7 @@
         >
 
         <label class="text" for="ingredients">Ingredients</label>
-        <button class="pill_button" id="openIngredientsBtn" onclick="openModal('ingredientSearcher')">Modify ingredients</button>
+        <button class="pill_button" type="button" id="openIngredientsBtn" onclick="openModal('ingredientSearcher')">Modify ingredients</button>
 
         <label class="text" for="description">Description</label>
         <textarea id="description" name="description" rows="5" required
