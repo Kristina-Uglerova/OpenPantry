@@ -18,7 +18,7 @@ class RecipeController extends AControllerBase
         $recipe = Recipe::getOne($id);
         return $this->html([
             'recipe' => $recipe,
-            'ingredients' => $this->fetchRecipeIngredients($id)
+            'ingredients' => $this->fetchRecipeIngredientsInfo($id)
         ]);
     }
 
@@ -44,32 +44,51 @@ class RecipeController extends AControllerBase
 
     public function recipe_form(): Response
     {
+        $id = $this->request()->getValue('recipeId');
+        $recipe = null;
+
+        if ($id) {
+            $recipe = Recipe::getOne($id);
+        }
+
         return $this->html([
-            'recipe' => null
+            'recipe' => $recipe
         ]);
     }
 
     public function save()
     {
         $id = (int)$this->request()->getValue('id');
-        $recipe = new Recipe();
+        $recipe = $id ? Recipe::getOne($id) : new Recipe();
         $recipe->setName($this->request()->getValue('title'));
-        $recipe->setImagePath($this->request()->getFiles()['image']['name']);
         $recipe->setDescription($this->request()->getValue('description'));
         $recipe->setUserId((int)$this->app->getAuth()->getLoggedUserId());
-        $newFileName = FileStorage::saveFile($this->request()->getFiles()['image']);
-        $recipe->setImagePath($newFileName);
+
+        if (!empty($this->request()->getFiles()['image']['name'])) {
+            $newFileName = FileStorage::saveFile($this->request()->getFiles()['image']);
+            $recipe->setImagePath($newFileName);
+        }
+
         $recipe->save();
 
-        $ingredients = $this->request()->getValue('ingredients');
+        if (!$id) {
+            $ingredients = $this->request()->getValue('ingredients');
+            if (is_array($ingredients)) {
+                $this->createRecipeIngredients($ingredients, $recipe->getId());
+            }
+        }
+
+        return $this->redirect($this->url("recipe.users_recipes"));
+    }
+
+    public function createRecipeIngredients(array $ingredients, int $recipeId) {
         foreach ($ingredients as $ingredient) {
             $recipeIngredient = new RecipeIngredient();
-            $recipeIngredient->setRecipeId($recipe->getId());
+            $recipeIngredient->setRecipeId($recipeId);
             $recipeIngredient->setIngredientId($ingredient['id']);
             $recipeIngredient->setAmount($ingredient['amount']);
             $recipeIngredient->save();
         }
-        return $this->redirect($this->url("recipe.users_recipes"));
     }
 
     public function delete() {
@@ -80,17 +99,24 @@ class RecipeController extends AControllerBase
         return $this->redirect($this->url("recipe.users_recipes"));
     }
 
-    public function fetchRecipeIngredients(int $recipeId): string
+    public function fetchRecipeIngredientsInfo(int $recipeId): array
     {
-        $ingredients = Ingredient::GetAll();
-        $query = "
-        SELECT i.name, i.unit, r.amount
-        FROM recipe_ingredients r
-        JOIN ingredients i ON r.ingredient_id = i.id
-        WHERE r.recipe_id = :id";
-        $stmt = self::$connection->prepare($query);
-        $stmt->execute(['id' => $recipeId]);
-        $stmt = \App\Core\DB::run($query, ['id' => $recipeId]);
-        return $stmt->fetchAll();
+        $result = [];
+        $recipeIngredients = RecipeIngredient::getAll('recipe_id = '. $recipeId);
+
+        foreach ($recipeIngredients as $recipeIngredient) {
+            $ingredient = Ingredient::getOne($recipeIngredient->getIngredientId());
+
+            if ($ingredient) {
+                $result[] = [
+                    'name' => $ingredient->getName(),
+                    'unit' => $ingredient->getUnit(),
+                    'amount' => $recipeIngredient->getAmount()
+                ];
+            }
+        }
+
+        return $result;
     }
+
 }

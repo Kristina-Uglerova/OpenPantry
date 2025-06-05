@@ -26,6 +26,9 @@
         <p><?= htmlspecialchars($data['recipe']->getDescription()) ?></p>
     </div>
     <?php if ($_SESSION['user'] == $data['recipe']->getUserId()) : ?>
+        <a href="?c=recipe&a=recipe_form&recipeId=<?= htmlspecialchars($data['recipe']->getId()) ?>" class="icon-button">
+            <span class="bi bi-pencil-square"></span>
+        </a>
         <form method="post" action="<?= $link->url("recipe.delete") ?>">
             <input type="hidden" name="id" value="<?= $data['recipe']->getId() ?>">
             <button type="submit" class="icon-button">

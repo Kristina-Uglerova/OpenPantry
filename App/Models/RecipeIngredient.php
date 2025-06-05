@@ -25,4 +25,11 @@ class RecipeIngredient extends \App\Core\Model
     public function setIngredientId(int $ingredientId) {
         $this->ingredient_id = $ingredientId;
     }
+
+    public function getIngredientId() {
+        return $this->ingredient_id;
+    }
+    public function getAmount() {
+        return $this->amount;
+    }
 }
