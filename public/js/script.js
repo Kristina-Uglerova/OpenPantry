@@ -77,6 +77,7 @@ window.triggerRecipeSearch = async function () {
 }
 
 function renderRecipesSearchResults(results) {
+    console.log(results)
     const resultList = document.getElementById('filteredRecipes');
     resultList.innerHTML = '';
     if (!results || results.length === 0) {
@@ -86,14 +87,14 @@ function renderRecipesSearchResults(results) {
     results.forEach(recipe => {
         const a = document.createElement('a');
         a.className = `recipe-card`;
-        a.href = '?c=recipe&a=recipe_detail&recipeId=<?= htmlspecialchars($recipe->getId()) ?>'
+        a.href = `?c=recipe&a=recipe_detail&recipeId=${recipe.id}`
         const image = document.createElement('img');
-        image.alt = `${recipe.getName()}`
-        image.src = `public/uploads/${recipe.getImagePath()}`
+        image.alt = `${recipe.name}`
+        image.src = `public/uploads/${recipe.image_path}`
         a.appendChild(image)
         const name = document.createElement('h3')
         name.className = 'subtitle'
-        name.innerText = `${($recipe.getName()) }`
+        name.innerText = `${recipe.name}`
         a.appendChild(name)
         resultList.appendChild(a);
     });

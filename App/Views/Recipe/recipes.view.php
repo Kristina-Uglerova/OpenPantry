@@ -7,7 +7,7 @@
     <h1 class="title">All Recipes</h1>
     <div class="recipes-filter">
         <label class="search-input-label">
-            <input type="text" id="searchResults" placeholder="Search recipes..." class="search-input" oninput="triggerRecipeSearch()">
+            <input type="text" id="recipeSearchBar" placeholder="Search recipes..." class="search-input" oninput="triggerRecipeSearch()">
         </label>
         <button class="icon-button">&#8942;</i></button>
     </div>
