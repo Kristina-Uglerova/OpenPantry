@@ -93,12 +93,8 @@ function addIngredientToSelectedList(ingredient) {
     const li = document.createElement('li');
     li.innerHTML = `
             ${ingredient.name} (${ingredient.unit})
-            <input type="number" placeholder="Amount" id="amountInput"">
+            <input type="number" placeholder="Amount" min="1" id="amountInput"">
         `;
 
     selectedList.appendChild(li);
-}
-
-function addNewIngredient() {
-    //ingredient = document.getElementById('newIngredientName').value;
 }

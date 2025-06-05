@@ -19,7 +19,7 @@
         ><?= isset($recipe) && $recipe !== null ? htmlspecialchars($recipe->getDescription()) : '' ?></textarea>
 
         <label class="text" for="image">Image</label>
-        <input type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg, image/webp"
+        <input type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg, image/webp" required
                value="<?= isset($recipe) && $recipe !== null ? htmlspecialchars($recipe->getImage()) : '' ?>"
         >
 
