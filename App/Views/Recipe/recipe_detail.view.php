@@ -1,7 +1,11 @@
+<?php
+/** @var array $data */
+/** @var \App\Core\LinkGenerator $link */
+?>
 <div class="recipe-detail">
     <div class="recipe-header">
-        <h1 class="title">Chocolate Apple Cake</h1>
-        <img class="picture" src="/public/images/home_picture.jpg" alt="Chocolate Apple Cake">
+        <h1 class="title"><?= htmlspecialchars($data['recipe']->getName()) ?></h1>
+        <img class="picture" src="public/uploads/<?= htmlspecialchars($data['recipe']->getImagePath()) ?>" alt=<?= htmlspecialchars($data['recipe']->getName()) ?>>
     </div>
 
     <div class="recipe-body">
@@ -17,12 +21,14 @@
 
     <div class="recipe-body">
         <h2 class="subtitle">Instructions</h2>
-        <ol class="instruction-steps">
-            <li>Preheat oven to 180°C (356°F).</li>
-            <li>Peel and slice apples, chop chocolate.</li>
-            <li>Mix all dry ingredients in a bowl.</li>
-            <li>Add eggs and stir until smooth.</li>
-            <li>Pour into a baking dish and bake for 35–40 min.</li>
-        </ol>
+        <p><?= htmlspecialchars($data['recipe']->getDescription()) ?></p>
     </div>
+    <?php if ($_SESSION['user'] == $data['recipe']->getUserId()) : ?>
+        <form method="post" action="<?= $link->url("recipe.delete") ?>">
+            <input type="hidden" name="id" value="<?= $data['recipe']->getId() ?>">
+            <button type="submit" class="icon-button">
+                <span class="bi bi-trash"></span>
+            </button>
+        </form>
+    <?php endif; ?>
 </div>

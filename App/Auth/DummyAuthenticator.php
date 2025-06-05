@@ -36,7 +36,7 @@ class DummyAuthenticator implements IAuthenticator
         if($user != null) {
             $isPasswordValid = password_verify($password, $user->getPasswordHashed());
             if($isPasswordValid) {
-                $_SESSION['user'] = $login;
+                $_SESSION['user'] = $user->getId();
                 return true;
             }
         }

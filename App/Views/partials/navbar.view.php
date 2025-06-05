@@ -10,7 +10,7 @@
         <li><a href="/">Domov</a></li>
         <li><a href="<?= $link->url("Recipe.recipes") ?>">Recipes</a></li>
         <?php if ($auth->isLogged()) : ?>
-            <li><a href="<?= $link->url("Recipe.recipes") ?>">My recipes</a></li>
+            <li><a href="<?= $link->url("Recipe.users_recipes") ?>">My recipes</a></li>
             <li><a href="<?= $link->url("Recipe.recipe_form") ?>">Create recipe</a></li>
             <?php if ($auth->isUserAdmin()) : ?>
                 <li><a href="<?= $link->url("Ingredient.index") ?>">Ingredients</a></li>

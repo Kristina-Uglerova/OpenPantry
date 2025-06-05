@@ -1,11 +1,13 @@
 <?php
 /** @var \App\Models\Recipe|null $recipe */
+/** @var \App\Core\LinkGenerator $link */
+
 ?>
 
 <div class="recipe-detail">
     <h1 class="title"><?= isset($recipe) && $recipe !== null ? 'Edit Recipe' : 'Add New Recipe' ?></h1>
 
-    <form class="form-body-vertical" method="post" enctype="multipart/form-data">
+    <form class="form-body-vertical" method="post" action="<?= $link->url("recipe.save") ?>" enctype="multipart/form-data">
         <label class="text" for="title">Title</label>
         <input type="text" id="title" name="title" required
                value="<?= isset($recipe) && $recipe !== null ? htmlspecialchars($recipe->getTitle()) : '' ?>"

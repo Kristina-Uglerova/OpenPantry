@@ -31,14 +31,13 @@ class AuthController extends AControllerBase
     public function login(): Response
     {
         $formData = $this->app->getRequest()->getPost();
-        $logged = null;
         $logged = $this->app->getAuth()->login($formData['login'], $formData['password']);
         if ($logged) {
             return $this->redirect($this->url("home.index"));
         }
 
         $data = ($logged === false ? ['message' => 'Zlý login alebo heslo!'] : []);
-        return $this->redirect($this->url("recipe.recipe_detail"));
+        return $this->redirect($this->url("home.index"));
     }
 
     /**
@@ -56,7 +55,11 @@ class AuthController extends AControllerBase
         $email = $this->request()->getValue('email');
         $password = $this->request()->getValue('password');
         $confirmPassword = $this->request()->getValue('confirm_password');
-
+        if($email == null || $password == null || $confirmPassword == null) {
+            return $this->html(null, [
+                'error' => 'All fields are required.'
+            ]);
+        }
         if ($password !== $confirmPassword) {
             return $this->html(null, [
                 'error' => 'Passwords do not match.'

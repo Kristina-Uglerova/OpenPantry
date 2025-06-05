@@ -44,4 +44,8 @@ class User extends Model
     {
         return $this->password_hashed;
     }
+
+    public function getId(): int {
+        return $this->id;
+    }
 }
