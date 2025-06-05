@@ -1,7 +1,6 @@
 <?php
 /** @var array $data */
 /** @var \App\Core\LinkGenerator $link */
-
 ?>
 <div class="recipes-page">
     <h1 class="title">All Recipes</h1>
@@ -20,3 +19,10 @@
         <?php endforeach; ?>
     </div>
 </div>
+
+<script>
+    let ingredients = [];
+    let tempIngredients = [];
+    const selectedIngredients = document.getElementById('selectedIngredients')
+    renderSelectedIngredients(tempIngredients)
+</script>

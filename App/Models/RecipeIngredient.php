@@ -1,6 +1,6 @@
 <?php
 namespace App\Models;
-class RecipesIngredientsRelation extends \App\Core\Model
+class RecipeIngredient extends \App\Core\Model
 {
     protected int $id;
     protected int $recipe_id;
@@ -12,5 +12,17 @@ class RecipesIngredientsRelation extends \App\Core\Model
             'ingredient_id' => $ingredientId
         ], null, 1);
         return !empty($results);
+    }
+
+    public function setAmount(int $amount) {
+        $this->amount = $amount;
+    }
+
+    public function setRecipeId(int $recipeId) {
+        $this->recipe_id = $recipeId;
+    }
+
+    public function setIngredientId(int $ingredientId) {
+        $this->ingredient_id = $ingredientId;
     }
 }

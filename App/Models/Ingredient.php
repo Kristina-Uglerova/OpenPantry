@@ -21,4 +21,8 @@ class Ingredient extends Model
     {
         $this->unit = $unit;
     }
+
+    public static function getRecipeIngredients() {
+
+    }
 }

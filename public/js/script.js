@@ -1,5 +1,7 @@
 import {IngredientsAPI} from "./IngredientsAPI.js";
 import {RecipesAPI} from "./RecipeAPI.js";
+window.selectedIngredients = [];
+
 window.openModal = openModal;
 function openModal(id) {
     console.log("Opening modal with ID:", id);
@@ -120,14 +122,50 @@ function renderSearchResults(results) {
     });
 }
 
+
 function addIngredientToSelectedList(ingredient) {
+    const exists = selectedIngredients.find(i => i.id === ingredient.id);
+    if (exists) return;
+
     const selectedList = document.getElementById('selectedIngredients');
 
     const li = document.createElement('li');
     li.innerHTML = `
             ${ingredient.name} (${ingredient.unit})
-            <input type="number" placeholder="Amount" min="1" id="amountInput"">
+            <input type="number" placeholder="Amount" min="1" data-id="${ingredient.id}" data-name="${ingredient.name}" data-unit="${ingredient.unit}" class="ingredient-amount-input">
         `;
 
     selectedList.appendChild(li);
+    selectedIngredients.push(ingredient);
 }
+
+window.submitIngredients = function () {
+    const form = document.getElementById('recipeEntryForm');
+
+    document.querySelectorAll('.ingredient-hidden').forEach(e => e.remove());
+
+    const amountInputs = document.querySelectorAll('.ingredient-amount-input');
+    amountInputs.forEach((input, index) => {
+        const id = input.dataset.id;
+        const name = input.dataset.name;
+        const unit = input.dataset.unit;
+        const amount = input.value;
+
+        const idField = document.createElement('input');
+        idField.type = 'hidden';
+        idField.name = `ingredients[${index}][id]`;
+        idField.value = id;
+        idField.classList.add('ingredient-hidden');
+
+        const amountField = document.createElement('input');
+        amountField.type = 'hidden';
+        amountField.name = `ingredients[${index}][amount]`;
+        amountField.value = amount;
+        amountField.classList.add('ingredient-hidden');
+
+        form.appendChild(idField);
+        form.appendChild(amountField);
+    });
+
+    closeModal('ingredientSearcher');
+};

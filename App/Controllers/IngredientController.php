@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 use App\Models\Ingredient;
-use App\Models\RecipesIngredientsRelation;
+use App\Models\RecipeIngredient;
 use App\Core\Responses\RedirectResponse;
 
 class IngredientController extends AControllerBase
@@ -37,7 +37,7 @@ class IngredientController extends AControllerBase
 
     public function delete(): Response {
         $id = $this->request()->getValue('id');
-        $used = RecipesIngredientsRelation::containsIngredient($id);
+        $used = RecipeIngredient::containsIngredient($id);
         if ($used) {
             return false;
         }
@@ -64,6 +64,5 @@ class IngredientController extends AControllerBase
         $ingredient->setName($this->request()->getValue('name'));
         $ingredient->setUnit($this->request()->getValue('unit'));
         $ingredient->save();
-
     }
 }

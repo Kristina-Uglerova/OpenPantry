@@ -1,4 +1,11 @@
+<?php
+/** @var array $data */
+?>
+
 <div>
+    <div class="text-center text-danger mb-3">
+        <?= @$_GET['0'] ?>
+    </div>
     <div class="header">
         <div>
             <span class="title">DISCOVER AND SHARE NEW COMBINATIONS</span>
@@ -9,7 +16,6 @@
                 <button onclick="openModal('createAccountModal')" class="pill_button">Create new account</button>
             </div>
         </div>
-
         <img src="/public/images/home_picture.jpg" alt="home" class="picture" />
     </div>
 </div>

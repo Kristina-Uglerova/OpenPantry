@@ -8,6 +8,7 @@ use App\Core\Responses\Response;
 use App\Helpers\FileStorage;
 use App\Models\Ingredient;
 use App\Models\Recipe;
+use App\Models\RecipeIngredient;
 
 class RecipeController extends AControllerBase
 {
@@ -16,7 +17,8 @@ class RecipeController extends AControllerBase
         $id = $this->request()->getValue('recipeId');
         $recipe = Recipe::getOne($id);
         return $this->html([
-            'recipe' => $recipe
+            'recipe' => $recipe,
+            'ingredients' => $this->fetchRecipeIngredients($id)
         ]);
     }
 
@@ -58,13 +60,37 @@ class RecipeController extends AControllerBase
         $newFileName = FileStorage::saveFile($this->request()->getFiles()['image']);
         $recipe->setImagePath($newFileName);
         $recipe->save();
-        return $this->redirect($this->url("recipe.recipe_detail", ["id" => $id]));
+
+        $ingredients = $this->request()->getValue('ingredients');
+        foreach ($ingredients as $ingredient) {
+            $recipeIngredient = new RecipeIngredient();
+            $recipeIngredient->setRecipeId($recipe->getId());
+            $recipeIngredient->setIngredientId($ingredient['id']);
+            $recipeIngredient->setAmount($ingredient['amount']);
+            $recipeIngredient->save();
+        }
+        return $this->redirect($this->url("recipe.users_recipes"));
     }
 
     public function delete() {
         $id = (int)$this->request()->getValue('id');
         $recipe = Recipe::getOne($id);
+        FileStorage::deleteFile($recipe->getImagePath());
         $recipe->delete();
         return $this->redirect($this->url("recipe.users_recipes"));
+    }
+
+    public function fetchRecipeIngredients(int $recipeId): string
+    {
+        $ingredients = Ingredient::GetAll();
+        $query = "
+        SELECT i.name, i.unit, r.amount
+        FROM recipe_ingredients r
+        JOIN ingredients i ON r.ingredient_id = i.id
+        WHERE r.recipe_id = :id";
+        $stmt = self::$connection->prepare($query);
+        $stmt->execute(['id' => $recipeId]);
+        $stmt = \App\Core\DB::run($query, ['id' => $recipeId]);
+        return $stmt->fetchAll();
     }
 }

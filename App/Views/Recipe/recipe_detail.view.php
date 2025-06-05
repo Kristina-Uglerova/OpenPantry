@@ -11,11 +11,13 @@
     <div class="recipe-body">
         <h2 class="subtitle">Ingredients</h2>
         <ul class="ingredients-list">
-            <li>200g flour</li>
-            <li>3 apples</li>
-            <li>100g dark chocolate</li>
-            <li>2 eggs</li>
-            <li>1 tsp cinnamon</li>
+            <?php foreach ($data['ingredients'] as $ingredient): ?>
+                <li>
+                    <?= htmlspecialchars($ingredient['amount']) ?>
+                    <?= htmlspecialchars($ingredient['unit']) ?>
+                    <?= htmlspecialchars($ingredient['name']) ?>
+                </li>
+            <?php endforeach; ?>
         </ul>
     </div>
 
