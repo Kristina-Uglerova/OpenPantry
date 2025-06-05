@@ -87,7 +87,7 @@ class DummyAuthenticator implements IAuthenticator
             return false;
         }
 
-        $user = User::getUserByEmail($_SESSION['user']);
+        $user = User::getOne($_SESSION['user']);
         if (!$user) {
             return false;
         }

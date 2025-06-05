@@ -7,11 +7,11 @@
     <h1 class="title">All Recipes</h1>
     <div class="recipes-filter">
         <label class="search-input-label">
-            <input type="text" placeholder="Search recipes..." class="search-input">
+            <input type="text" id="searchResults" placeholder="Search recipes..." class="search-input" oninput="triggerRecipeSearch()">
         </label>
         <button class="icon-button">&#8942;</i></button>
     </div>
-    <div class="recipes-grid">
+    <div id="filteredRecipes" class="recipes-grid">
         <?php foreach ($data['recipes'] as $recipe): ?>
             <a href="?c=recipe&a=recipe_detail&recipeId=<?= htmlspecialchars($recipe->getId()) ?>" class="recipe-card">
                 <img class="picture" src="public/uploads/<?= htmlspecialchars($recipe->getImagePath()) ?>" alt=<?= htmlspecialchars($recipe->getName()) ?>>

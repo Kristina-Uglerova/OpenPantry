@@ -7,7 +7,7 @@ class DataService {
      * Base url of the web API
      * @type {string}
      */
-    #baseUrl = "http://localhost/"
+    #baseUrl = "/"
     /**
      * Prefix of target controller
      * @type {string}

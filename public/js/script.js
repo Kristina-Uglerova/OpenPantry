@@ -1,4 +1,5 @@
 import {IngredientsAPI} from "./IngredientsAPI.js";
+import {RecipesAPI} from "./RecipeAPI.js";
 window.openModal = openModal;
 function openModal(id) {
     console.log("Opening modal with ID:", id);
@@ -54,17 +55,48 @@ document.getElementById("ingredientSearchBar").oninput = async () => {
     triggerIngredientSearch()
 }
 window.triggerIngredientSearch = async function () {
-    console.log("Triggering ingredient search...");
     var ingredientsAPI = new IngredientsAPI()
-
     const query = document.getElementById('ingredientSearchBar').value.trim();
     try {
         const result = await ingredientsAPI.getIngredients('&name=' + query);
-        console.log(result);
         renderSearchResults(result);
     } catch (error) {
         console.error("Error fetching ingredients:", error);
     }
+}
+
+window.triggerRecipeSearch = async function () {
+    var recipesApi = new RecipesAPI()
+    const query = document.getElementById('recipeSearchBar').value.trim();
+    try {
+        const result = await recipesApi.getRecipes('&name=' + query);
+        renderRecipesSearchResults(result);
+    } catch (error) {
+        console.error("Error fetching ingredients:", error);
+    }
+}
+
+function renderRecipesSearchResults(results) {
+    const resultList = document.getElementById('filteredRecipes');
+    resultList.innerHTML = '';
+    if (!results || results.length === 0) {
+        resultList.innerHTML = '<p>No results found.</p>';
+        return;
+    }
+    results.forEach(recipe => {
+        const a = document.createElement('a');
+        a.className = `recipe-card`;
+        a.href = '?c=recipe&a=recipe_detail&recipeId=<?= htmlspecialchars($recipe->getId()) ?>'
+        const image = document.createElement('img');
+        image.alt = `${recipe.getName()}`
+        image.src = `public/uploads/${recipe.getImagePath()}`
+        a.appendChild(image)
+        const name = document.createElement('h3')
+        name.className = 'subtitle'
+        name.innerText = `${($recipe.getName()) }`
+        a.appendChild(name)
+        resultList.appendChild(a);
+    });
 }
 
 function renderSearchResults(results) {
