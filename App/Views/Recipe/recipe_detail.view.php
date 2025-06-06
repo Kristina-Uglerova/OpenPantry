@@ -25,7 +25,7 @@
         <h2 class="subtitle">Instructions</h2>
         <p><?= htmlspecialchars($data['recipe']->getDescription()) ?></p>
     </div>
-    <?php if ($_SESSION['user'] == $data['recipe']->getUserId()) : ?>
+    <?php if (!empty($_SESSION['user']) && $_SESSION['user'] == $data['recipe']->getUserId()) : ?>
         <a href="?c=recipe&a=recipe_form&recipeId=<?= htmlspecialchars($data['recipe']->getId()) ?>" class="icon-button">
             <span class="bi bi-pencil-square"></span>
         </a>

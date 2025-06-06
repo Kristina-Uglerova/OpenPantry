@@ -5,6 +5,11 @@
 ?>
 
 <div class="ingredients-page">
+    <?php if (!empty($_GET['0'])): ?>
+        <script>
+            alert("<?= htmlspecialchars($_GET['0']) ?>");
+        </script>
+    <?php endif; ?>
     <h1 class="title">Ingredients</h1>
     <table class="ingredients-table">
         <thead>

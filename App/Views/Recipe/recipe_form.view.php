@@ -37,7 +37,8 @@ $recipe = $data['recipe'] ?? null;
             </div>
         <?php endif; ?>
 
-        <input type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg, image/webp" required>
+        <input type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg, image/webp"
+            <?= !$recipe || !$recipe->getImagePath() ? 'required' : '' ?>>
 
         <div class="button-container">
             <button type="submit" class="pill_button">

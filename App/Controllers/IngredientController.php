@@ -40,7 +40,7 @@ class IngredientController extends AControllerBase
         $id = $this->request()->getValue('id');
         $used = RecipeIngredient::containsIngredient($id);
         if ($used) {
-            return $this->redirect($this->url('Ingredient.index'));
+            return $this->redirect($this->url("Ingredient.index", ['Ingredient cannot be deleted']));
         }
         $ingredient = Ingredient::getOne($id);
         $ingredient->delete();
