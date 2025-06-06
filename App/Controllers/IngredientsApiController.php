@@ -17,7 +17,7 @@ class IngredientsApiController extends AControllerBase
     public function getIngredients($name = null): Response
     {
         $name = $this->request()->getValue("name");
-        $ingredients = Ingredient::getAll("name LIKE '%" . $name . "%'");
+        $ingredients = Ingredient::getAll("name LIKE :name", ['name' => "%$name%"]);
         return $this->json($ingredients);
     }
 }

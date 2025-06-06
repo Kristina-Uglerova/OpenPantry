@@ -32,7 +32,7 @@ class RecipeController extends AControllerBase
 
     public function users_recipes(): Response
     {
-        $recipes = Recipe::getAll("user_id = " . $_SESSION["user"]);
+        $recipes = Recipe::getAll("user_id = :user_id", ['user_id' => $_SESSION['user']]);
         return $this->html([
             'recipes' => $recipes
         ]);    }
@@ -124,7 +124,7 @@ class RecipeController extends AControllerBase
         }
         $recipe = Recipe::getOne($id);
         if ($recipe) {
-            $recipeIngredients = RecipeIngredient::getAll('recipe_id = ' . $id);
+            $recipeIngredients = RecipeIngredient::getAll('recipe_id = :recipe_id', ['recipe_id' => $id]);
             foreach ($recipeIngredients as $ri) {
                 $ri->delete();
             }
@@ -139,7 +139,7 @@ class RecipeController extends AControllerBase
     public function fetchRecipeIngredientsInfo(int $recipeId): array
     {
         $result = [];
-        $recipeIngredients = RecipeIngredient::getAll('recipe_id = '. $recipeId);
+        $recipeIngredients = RecipeIngredient::getAll('recipe_id = :recipe_id', ['recipe_id' => $recipeId]);
 
         foreach ($recipeIngredients as $recipeIngredient) {
             $ingredient = Ingredient::getOne($recipeIngredient->getIngredientId());
@@ -152,7 +152,6 @@ class RecipeController extends AControllerBase
                 ];
             }
         }
-
         return $result;
     }
 }

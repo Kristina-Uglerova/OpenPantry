@@ -4,7 +4,6 @@ window.selectedIngredients = [];
 
 window.openModal = openModal;
 function openModal(id) {
-    console.log("Opening modal with ID:", id);
     document.getElementById(id).style.display = "block";
     document.getElementById("modalOverlay").style.display = "block";
 }
@@ -13,11 +12,6 @@ window.closeModal = closeModal;
 function closeModal(id) {
     document.getElementById(id).style.display = "none";
     document.getElementById("modalOverlay").style.display = "none";
-}
-
-function openMessageModal(id, message) {
-    document.getElementById(id).textContent = message;
-    openModal(id);
 }
 
 window.openIngredientModal = openIngredientModal

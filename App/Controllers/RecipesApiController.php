@@ -17,7 +17,8 @@ class RecipesApiController extends AControllerBase
     public function getRecipes($name = null): Response
     {
         $name = $this->request()->getValue("name");
-        $recipes = Recipe::getAll("name LIKE '%" . $name . "%'");
+
+        $recipes = Recipe::getAll("name LIKE :name", ['name' => "%$name%"]);
         return $this->json($recipes);
     }
 }
