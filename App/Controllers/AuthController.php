@@ -35,7 +35,7 @@ class AuthController extends AControllerBase
         if ($logged) {
             return $this->redirect($this->url("home.index"));
         }
-        $data = ($logged === false ? ['message' => 'Zlý login alebo heslo!'] : []);
+        $data = ($logged === false ? ['message' => 'Incorrect login or password!'] : []);
         return $this->redirect($this->url("home.index", [$data['message']]));
     }
 
@@ -54,26 +54,27 @@ class AuthController extends AControllerBase
         $email = $this->request()->getValue('email');
         $password = $this->request()->getValue('password');
         $confirmPassword = $this->request()->getValue('confirm_password');
-        $errors = [];
-        if(!$email || !$password || !$confirmPassword) {
-            $errors[] = 'All fields are required';
+        $error = '';
+        if(trim($email) === "" || trim($password) === "" || trim($confirmPassword) === "") {
+            $error = 'All fields are required';
         }
 
         if ($email && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors[] = 'Invalid email format.';
+            $error = 'Invalid email format.';
         }
 
         if ($password !== $confirmPassword) {
-            $errors[] = 'Passwords do not match.';
+            $error = 'Passwords do not match.';
         }
 
         if ($email && User::getUserByEmail($email)) {
-            $errors[] = 'This email is already registered.';
+            $error = 'This email is already registered.';
         }
 
-        if (!empty($errors)) {
-            $data = ['message' => 'Zlý login alebo heslo!'];
-            return $this->html($data);        }
+        if (!empty($error)) {
+            $data = ['message' => $error];
+            return $this->redirect($this->url("home.index", [$data['message']]));
+        }
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 

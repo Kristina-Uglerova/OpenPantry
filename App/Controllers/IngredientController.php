@@ -7,6 +7,7 @@ use App\Core\Responses\Response;
 use App\Models\Ingredient;
 use App\Models\RecipeIngredient;
 use App\Core\Responses\RedirectResponse;
+use mysql_xdevapi\Exception;
 
 class IngredientController extends AControllerBase
 {
@@ -39,7 +40,7 @@ class IngredientController extends AControllerBase
         $id = $this->request()->getValue('id');
         $used = RecipeIngredient::containsIngredient($id);
         if ($used) {
-            return false;
+            return $this->redirect($this->url('Ingredient.index'));
         }
         $ingredient = Ingredient::getOne($id);
         $ingredient->delete();
@@ -50,7 +51,16 @@ class IngredientController extends AControllerBase
         $id = $this->request()->getValue('id');
         $name = $this->request()->getValue('name');
         $unit = $this->request()->getValue('unit');
-        $ingredient = Ingredient::getOne($id);
+        try {
+            $ingredient = Ingredient::getOne($id);
+        } catch (Exception) {
+            $data = ['message' => 'Ingredient was not found'];
+            return $this->redirect($this->url("home.index", [$data['message']]));
+        }
+        if (trim($name) === '' || trim($unit) === '') {
+            $data = ['message' => 'Al items has to be filled'];
+            return $this->redirect($this->url("home.index", [$data['message']]));
+        }
         $ingredient->setName($name);
         $ingredient->setUnit($unit);
         $ingredient->save();
@@ -61,8 +71,14 @@ class IngredientController extends AControllerBase
     {
         $id = (int)$this->request()->getValue('id');
         $ingredient = new Ingredient();
-        $ingredient->setName($this->request()->getValue('name'));
-        $ingredient->setUnit($this->request()->getValue('unit'));
+        $name = $this->request()->getValue('name');
+        $unit = $this->request()->getValue('unit');
+        if (trim($name) === '' || trim($unit) === '') {
+            $data = ['message' => 'All items has to be filled'];
+            return $this->redirect($this->url("recipe.form", [$data['message']]));
+        }
+        $ingredient->setName($name);
+        $ingredient->setUnit($unit);
         $ingredient->save();
     }
 }

@@ -290,6 +290,14 @@
     margin-top: 10px;
 }
 
+.error {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
 body {
     background-color: #6e932e;
 }

@@ -10,8 +10,8 @@
         <div class>
             <h3 class="subtitle">New ingredient</h3>
             <form id="newIngredientForm" class="form-body-horizontal" method="post" action="<?= $link->url("ingredient.save")?>">
-                <input type="text" id="name" name="name" placeholder="Name" class="search-input">
-                <input type="text" id="unit" name="unit" placeholder="Unit" class="search-input">
+                <input type="text" id="name" name="name" placeholder="Name" class="search-input" required>
+                <input type="text" id="unit" name="unit" placeholder="Unit" class="search-input" required>
                 <button class="small_pill_button">Add</button>
             </form>
         </div>

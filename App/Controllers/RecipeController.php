@@ -60,46 +60,80 @@ class RecipeController extends AControllerBase
     {
         $id = (int)$this->request()->getValue('id');
         $recipe = $id ? Recipe::getOne($id) : new Recipe();
-        $recipe->setName($this->request()->getValue('title'));
-        $recipe->setDescription($this->request()->getValue('description'));
-        $recipe->setUserId((int)$this->app->getAuth()->getLoggedUserId());
+        $title = trim($this->request()->getValue('title'));
+        $description = trim($this->request()->getValue('description'));
+
+        if ($title === '' || $description === '') {
+            $data = ['message' => 'Title and description must be filled in.'];
+            return $this->redirect($this->url("recipe.recipe_form", [$data['message']]));
+        }
+        $userId = (int)$this->app->getAuth()->getLoggedUserId();
+        if ($userId <= 0) {
+            return $this->redirect($this->url("home.index", ['You must be logged in.']));
+        }
+        $recipe->setName($title);
+        $recipe->setDescription($description);
+        $recipe->setUserId($userId);
 
         if (!empty($this->request()->getFiles()['image']['name'])) {
             if($this->request()->getValue('oldImage')) {
                 FileStorage::deleteFile($this->request()->getValue('oldImage'));
             }
             $newFileName = FileStorage::saveFile($this->request()->getFiles()['image']);
+            if(!$newFileName) {
+                return $this->redirect($this->url("recipe.recipe_form", ['You have to add an image']));
+            }
             $recipe->setImagePath($newFileName);
         }
-
         $recipe->save();
 
         if (!$id) {
             $ingredients = $this->request()->getValue('ingredients');
             if (is_array($ingredients)) {
-                $this->createRecipeIngredients($ingredients, $recipe->getId());
+                $areIngredientsOk = $this->createRecipeIngredients($ingredients, $recipe->getId());
+                if (!$areIngredientsOk) {
+                    $this->delete($recipe->getId(), false);
+                    return $this->redirect($this->url("recipe.recipe_form", ['Amount has to be set and it has to be > 0']));
+                }
             }
         }
-
         return $this->redirect($this->url("recipe.users_recipes"));
     }
 
-    public function createRecipeIngredients(array $ingredients, int $recipeId) {
+    public function createRecipeIngredients(array $ingredients, int $recipeId): bool {
         foreach ($ingredients as $ingredient) {
+            $amount = $ingredient['amount'];
+            if ($amount === '' || $amount < 1) {
+                return false;
+            }
+
             $recipeIngredient = new RecipeIngredient();
             $recipeIngredient->setRecipeId($recipeId);
             $recipeIngredient->setIngredientId($ingredient['id']);
-            $recipeIngredient->setAmount($ingredient['amount']);
+            $recipeIngredient->setAmount($amount);
             $recipeIngredient->save();
         }
+
+        return true;
     }
 
-    public function delete() {
-        $id = (int)$this->request()->getValue('id');
+    public function delete($id = null, bool $withRedirect = true)
+    {
+        if (!$id) {
+            $id = (int)$this->request()->getValue('id');
+        }
         $recipe = Recipe::getOne($id);
-        FileStorage::deleteFile($recipe->getImagePath());
-        $recipe->delete();
-        return $this->redirect($this->url("recipe.users_recipes"));
+        if ($recipe) {
+            $recipeIngredients = RecipeIngredient::getAll('recipe_id = ' . $id);
+            foreach ($recipeIngredients as $ri) {
+                $ri->delete();
+            }
+            FileStorage::deleteFile($recipe->getImagePath());
+            $recipe->delete();
+        }
+        if ($withRedirect) {
+            return $this->redirect($this->url("recipe.users_recipes"));
+        }
     }
 
     public function fetchRecipeIngredientsInfo(int $recipeId): array
@@ -121,5 +155,4 @@ class RecipeController extends AControllerBase
 
         return $result;
     }
-
 }

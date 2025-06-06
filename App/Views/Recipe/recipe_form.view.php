@@ -4,7 +4,11 @@
 
 $recipe = $data['recipe'] ?? null;
 ?>
-
+<?php if (!empty($_GET['0'])): ?>
+    <script>
+        alert("<?= htmlspecialchars($_GET['0']) ?>");
+    </script>
+<?php endif; ?>
 <div class="recipe-detail">
     <h1 class="title"><?= $recipe ? 'Edit Recipe' : 'Add New Recipe' ?></h1>
 
@@ -28,12 +32,12 @@ $recipe = $data['recipe'] ?? null;
 
         <?php if ($recipe && $recipe->getImagePath()): ?>
             <div class="current-image">
-                <p>Current image:</p>
+                <p class="text">Current image:</p>
                 <img src="/public/uploads/<?= htmlspecialchars($recipe->getImagePath()) ?>" alt="Recipe image" style="max-width: 300px; margin-bottom: 10px;">
             </div>
         <?php endif; ?>
 
-        <input type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg, image/webp">
+        <input type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg, image/webp" required>
 
         <div class="button-container">
             <button type="submit" class="pill_button">
