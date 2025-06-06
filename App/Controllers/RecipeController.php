@@ -65,6 +65,9 @@ class RecipeController extends AControllerBase
         $recipe->setUserId((int)$this->app->getAuth()->getLoggedUserId());
 
         if (!empty($this->request()->getFiles()['image']['name'])) {
+            if($this->request()->getValue('oldImage')) {
+                FileStorage::deleteFile($this->request()->getValue('oldImage'));
+            }
             $newFileName = FileStorage::saveFile($this->request()->getFiles()['image']);
             $recipe->setImagePath($newFileName);
         }

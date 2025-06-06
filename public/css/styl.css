@@ -14,27 +14,28 @@
     right: 20px;
     border-radius: 50px;
     width: auto;
-    height: 50px;
+    height: auto;
     background-color: #fdf3b2;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 10px 20px;
     z-index: 1000;
+    gap: 10px;
 }
-
 
 .navbar ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
 }
 
 .navbar a {
     margin: 0 10px;
     text-decoration: none;
-    padding: 10px;
     display: inline-block;
     text-transform: uppercase;
     font-size: 1.2em;
@@ -77,6 +78,7 @@
     padding: 10px 20px;
     border-style: none;
     cursor: pointer;
+    max-width: 300px;
 }
 
 .small_pill_button {
@@ -190,32 +192,39 @@
     font-size: 22px;
 }
 .ingredients-page {
-    min-width: 700px;
-    width: max-content;
+    width: 90%;
+    max-width: 1000px;
     margin: 80px auto;
-    padding: 30px;
+    padding: 20px;
     background-color: #fdf3b2;
     border-radius: 25px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     font-family: 'Montserrat', sans-serif;
+    overflow-x: auto;
 }
 
 .ingredients-table {
     width: 100%;
     border-collapse: collapse;
-    text-align: left;
+    text-align: center;
+    font-size: 16px;
+    table-layout: auto;
+
 }
 
 .ingredients-table th,
 .ingredients-table td {
-    padding: 12px 16px;
+    padding: 8px 10px;
     border-bottom: 1px solid #ccc;
+    word-wrap: break-word;
+    white-space: nowrap;
 }
 
 .ingredients-table th {
     background-color: #e6d97b;
     font-weight: bold;
 }
+
 .icon-button {
     background: none;
     border: none;
@@ -237,10 +246,12 @@
 
 .recipes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 500px));
+    justify-content: center;
     gap: 30px;
     margin-top: 30px;
 }
+
 
 .recipe-card {
     display: block;
@@ -256,6 +267,7 @@
     width: 100%;
     border-radius: 15px;
     margin-bottom: 10px;
+    max-height: 500px;
 }
 
 .search-input {
@@ -301,4 +313,30 @@ input {
 
 #ingredientSearcher.modal {
     width: 75%;
+}
+
+@media screen and (max-width: 1200px) {
+    .header img {
+        display: none
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .home_buttons {
+        horiz-align: left;
+    }
+
+    .title, .text {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .title {
+        font-size: 45px;
+    }
 }

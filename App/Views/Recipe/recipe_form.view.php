@@ -11,17 +11,18 @@ $recipe = $data['recipe'] ?? null;
     <form id="recipeEntryForm" class="form-body-vertical" method="post" action="<?= $link->url("recipe.save") ?>" enctype="multipart/form-data">
         <?php if ($recipe): ?>
             <input type="hidden" name="id" value="<?= $recipe->getId() ?>">
+            <input type="hidden" name="oldImage" value="<?= $recipe->getImagePath() ?>"
         <?php endif; ?>
 
         <label class="text" for="title">Title</label>
-        <input type="text" id="title" name="title" required
+        <input type="text" class="search-input" id="title" name="title" required
                value="<?= $recipe ? htmlspecialchars($recipe->getName()) : '' ?>">
 
         <label class="text" for="ingredients">Ingredients</label>
         <button class="pill_button" type="button" id="openIngredientsBtn" onclick="openModal('ingredientSearcher')">Modify ingredients</button>
 
         <label class="text" for="description">Description</label>
-        <textarea id="description" name="description" rows="5" required><?= $recipe ? htmlspecialchars($recipe->getDescription()) : '' ?></textarea>
+        <textarea id="description" class="search-input" name="description" rows="5" required><?= $recipe ? htmlspecialchars($recipe->getDescription()) : '' ?></textarea>
 
         <label class="text" for="image">Image</label>
 
